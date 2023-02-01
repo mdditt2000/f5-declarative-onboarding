@@ -1,0 +1,66 @@
+{
+    "schemaVersion": "1.0.0",
+    "class": "Device",
+    "async": true,
+    "controls": {
+        "trace": true,
+        "traceResponse": true
+    },
+    "Common": {
+        "class": "Tenant",
+        "hostname": "bigip1.f5demo.com",
+        "myDns": {
+            "class": "DNS",
+            "nameServers": [
+                "10.192.125.100"
+            ]
+        },
+        "myNtp": {
+            "class": "NTP",
+            "servers": [
+                "172.23.241.134"
+            ],
+            "timezone": "UTC"
+        },
+        "internal": {
+            "class": "VLAN",
+            "tag": 200,
+            "mtu": 1500,
+            "interfaces": [
+                {
+                    "name": "1.1",
+                    "tagged": false
+                }
+            ]
+        },
+        "internal-self": {
+            "class": "SelfIp",
+            "address": "192.168.200.61/24",
+            "vlan": "internal",
+            "trafficGroup": "traffic-group-local-only"
+        },
+        "external": {
+            "class": "VLAN",
+            "tag": 100,
+            "mtu": 1500,
+            "interfaces": [
+                {
+                    "name": "1.2",
+                    "tagged": false
+                }
+            ]
+        },
+        "external-self": {
+            "class": "SelfIp",
+            "address": "10.192.75.61/24",
+            "vlan": "external",
+            "trafficGroup": "traffic-group-local-only"
+        },
+        "default": {
+            "class": "Route",
+            "gw": "10.192.75.1",
+            "network": "default",
+            "mtu": 0
+        }
+    }
+}
