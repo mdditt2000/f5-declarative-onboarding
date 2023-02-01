@@ -1,105 +1,143 @@
-{
-    "schemaVersion": "1.0.0",
-    "class": "Device",
-    "async": true,
-    "controls": {
-        "trace": true,
-        "traceResponse": true
-    },
-    "Common": {
-        "class": "Tenant",
-        "hostname": "bigip1.f5demo.com",
-        "myDns": {
-            "class": "DNS",
-            "nameServers": [
-                "10.192.125.100"
+[
+    {
+        "id": "5568821d-36b9-4235-8e00-d4e7bde92d9f",
+        "selfLink": "https://localhost/mgmt/shared/declarative-onboarding/task/5568821d-36b9-4235-8e00-d4e7bde92d9f",
+        "code": 500,
+        "status": "ERROR",
+        "message": "rollback failed",
+        "errors": [
+            "01071772:3: Self device (/Common/bigip1.f5demo.com) specified floating config sync IP (10.192.75.61), which is not associated with non-floating traffic group (/Common/traffic-group-local-only).",
+            "tryUntil: max tries reached: 01020036:3: The requested self IP (/Common/external-self) was not found."
+        ],
+        "result": {
+            "class": "Result",
+            "code": 500,
+            "status": "ERROR",
+            "dryRun": false,
+            "message": "rollback failed",
+            "errors": [
+                "01071772:3: Self device (/Common/bigip1.f5demo.com) specified floating config sync IP (10.192.75.61), which is not associated with non-floating traffic group (/Common/traffic-group-local-only).",
+                "tryUntil: max tries reached: 01020036:3: The requested self IP (/Common/external-self) was not found."
             ]
         },
-        "myNtp": {
-            "class": "NTP",
-            "servers": [
-                "172.23.241.134"
-            ],
-            "timezone": "UTC"
-        },
-        "internal": {
-            "class": "VLAN",
-            "tag": 200,
-            "mtu": 1500,
-            "interfaces": [
-                {
-                    "name": "1.1",
-                    "tagged": false
+        "declaration": {
+            "schemaVersion": "1.0.0",
+            "class": "Device",
+            "async": true,
+            "controls": {
+                "class": "Controls",
+                "userAgent": "vscode-f5/3.10.0",
+                "dryRun": false,
+                "trace": false,
+                "traceResponse": false
+            },
+            "Common": {
+                "class": "Tenant",
+                "hostname": "bigip1.f5demo.com",
+                "myDns": {
+                    "class": "DNS",
+                    "nameServers": [
+                        "10.192.125.100"
+                    ]
+                },
+                "myNtp": {
+                    "class": "NTP",
+                    "servers": [
+                        "172.23.241.134"
+                    ],
+                    "timezone": "UTC"
+                },
+                "internal": {
+                    "class": "VLAN",
+                    "tag": 200,
+                    "mtu": 1500,
+                    "interfaces": [
+                        {
+                            "name": "1.1",
+                            "tagged": false
+                        }
+                    ],
+                    "autoLastHop": "default",
+                    "cmpHash": "default",
+                    "failsafeEnabled": false,
+                    "failsafeAction": "failover-restart-tm",
+                    "failsafeTimeout": 90
+                },
+                "internal-self": {
+                    "class": "SelfIp",
+                    "address": "192.168.200.61/24",
+                    "vlan": "internal",
+                    "allowService": "default",
+                    "trafficGroup": "traffic-group-local-only"
+                },
+                "external": {
+                    "class": "VLAN",
+                    "tag": 100,
+                    "mtu": 1500,
+                    "interfaces": [
+                        {
+                            "name": "1.2",
+                            "tagged": false
+                        }
+                    ],
+                    "autoLastHop": "default",
+                    "cmpHash": "default",
+                    "failsafeEnabled": false,
+                    "failsafeAction": "failover-restart-tm",
+                    "failsafeTimeout": 90
+                },
+                "external-localself": {
+                    "class": "SelfIp",
+                    "address": "10.192.75.63/24",
+                    "vlan": "external",
+                    "allowService": "none",
+                    "trafficGroup": "traffic-group-local-only"
+                },
+                "external-self": {
+                    "class": "SelfIp",
+                    "address": "10.192.75.61/24",
+                    "vlan": "external",
+                    "allowService": "none",
+                    "trafficGroup": "traffic-group-1"
+                },
+                "default": {
+                    "class": "Route",
+                    "gw": "10.192.75.1",
+                    "network": "default",
+                    "mtu": 0,
+                    "localOnly": false
+                },
+                "configsync": {
+                    "class": "ConfigSync",
+                    "configsyncIp": "/Common/external-self/address"
+                },
+                "failoverAddress": {
+                    "class": "FailoverUnicast",
+                    "address": "/Common/external-self/address",
+                    "port": 1026
+                },
+                "failoverGroup": {
+                    "class": "DeviceGroup",
+                    "type": "sync-failover",
+                    "members": [
+                        "bigip1.f5demo.com",
+                        "bigip2.f5demo.com"
+                    ],
+                    "owner": "/Common/failoverGroup/members/0",
+                    "autoSync": true,
+                    "saveOnAutoSync": false,
+                    "networkFailover": true,
+                    "fullLoadOnSync": false,
+                    "asmSync": false
+                },
+                "trust": {
+                    "class": "DeviceTrust",
+                    "localUsername": "admin",
+                    "remoteHost": "10.192.75.62",
+                    "remoteUsername": "admin"
                 }
-            ]
+            }
         },
-        "internal-self": {
-            "class": "SelfIp",
-            "address": "192.168.200.61/24",
-            "vlan": "internal",
-            "allowService": "default",
-            "trafficGroup": "traffic-group-local-only"
-        },
-        "external": {
-            "class": "VLAN",
-            "tag": 100,
-            "mtu": 1500,
-            "interfaces": [
-                {
-                    "name": "1.2",
-                    "tagged": false
-                }
-            ]
-        },
-        "external-localself": {
-            "class": "SelfIp",
-            "address": "10.192.75.63/24",
-            "vlan": "external",
-            "allowService": "none",
-            "trafficGroup": "traffic-group-local-only"
-        },
-        "external-self": {
-            "class": "SelfIp",
-            "address": "10.192.75.61/24",
-            "vlan": "external",
-            "allowService": "none",
-            "trafficGroup": "traffic-group-1"
-        },
-        "default": {
-            "class": "Route",
-            "gw": "10.192.75.1",
-            "network": "default",
-            "mtu": 0
-        },
-        "configsync": {
-            "class": "ConfigSync",
-            "configsyncIp": "/Common/external-self/address"
-        },
-        "failoverAddress": {
-            "class": "FailoverUnicast",
-            "address": "/Common/external-self/address"
-        },
-        "failoverGroup": {
-            "class": "DeviceGroup",
-            "type": "sync-failover",
-            "members": [
-                "bigip1.f5demo.com",
-                "bigip1.f5demo.com"
-            ],
-            "owner": "/Common/failoverGroup/members/0",
-            "autoSync": true,
-            "saveOnAutoSync": false,
-            "networkFailover": true,
-            "fullLoadOnSync": false,
-            "asmSync": false
-        },
-        "trust": {
-            "class": "DeviceTrust",
-            "localUsername": "admin",
-            "localPassword": "f5PME123",
-            "remoteHost": "10.192.75.62",
-            "remoteUsername": "admin",
-            "remotePassword": "f5PME123"
-        }
+        "httpStatus": 200
     }
-}
+]
