@@ -4,8 +4,8 @@ Welcome to my Github page for everything F5 Declarative Onboarding (DO). I creat
 
 ### User Guides
 
-* [Behavioral Changes](https://github.com/mdditt2000/f5-appsvcs-extension/tree/master/user_guides/gslb#readme)
-* [Configure BIG-IP HA](https://github.com/mdditt2000/f5-appsvcs-extension/blob/master/user_guides/dns/listener/default-listener.json)
+* [Behavioral Changes coming to Declarative Onboarding 1.36](https://github.com/mdditt2000/f5-declarative-onboarding/blob/main/user-guides/behavioral-changes/README.md)
+* [Configure BIG-IP HA](Coming)
 
 ### F5 DO Examples
 
