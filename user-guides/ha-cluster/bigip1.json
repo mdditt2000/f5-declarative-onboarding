@@ -84,7 +84,7 @@
             "type": "sync-failover",
             "members": [
                 "bigip1.f5demo.com",
-                "bigip1.f5demo.com"
+                "bigip2.f5demo.com"
             ],
             "owner": "/Common/failoverGroup/members/0",
             "autoSync": true,
