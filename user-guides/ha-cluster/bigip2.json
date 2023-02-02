@@ -73,11 +73,11 @@
         },
         "configsync": {
             "class": "ConfigSync",
-            "configsyncIp": "/Common/external-self/address"
+            "configsyncIp": "/Common/internal-self/address"
         },
         "failoverAddress": {
             "class": "FailoverUnicast",
-            "address": "/Common/external-self/address"
+            "address": "/Common/internal-self/address"
         },
         "failoverGroup": {
             "class": "DeviceGroup",
@@ -97,7 +97,7 @@
             "class": "DeviceTrust",
             "localUsername": "admin",
             "localPassword": "f5PME123",
-            "remoteHost": "10.192.75.62",
+            "remoteHost": "192.168.200.61",
             "remoteUsername": "admin",
             "remotePassword": "f5PME123"
         }
